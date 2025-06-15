@@ -2,10 +2,7 @@ package com.raul.trabalhoJwt.domain.user;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,9 +13,9 @@ import java.util.List;
 @Table(name = "users")
 @Entity(name = "users")
 @Getter
-@NoArgsConstructor
+@Setter
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "id")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -27,6 +24,12 @@ public class User implements UserDetails {
     private String password;
     private UserRole role;
 
+    public User() {}
+
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
 
     public User(String login, String password, UserRole role) {
         this.login = login;
@@ -46,6 +49,10 @@ public class User implements UserDetails {
     }
 
 
+
+    public String getLogin() {
+        return this.login;
+    }
     @Override
     public String getUsername() {
         return this.login;
@@ -74,5 +81,28 @@ public class User implements UserDetails {
     @Override
     public String getPassword() {
         return this.password;
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    public UserRole getRole() {
+        return this.role;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }
